@@ -15,11 +15,25 @@ from gi.repository.Gio import Settings
 
 _log = logging.getLogger(__name__)
 
-# TODO(dustin): Do we want to disable the "save before exit" dialog?
+# TODO(dustin): We want to disable the "save before exit" dialog? A poor man's
+#               solution for this would be to save all modified, stored files
+#               (like we already want to do), and use save_as to stored all
+#               untitled documents to their temporary storage when/if we can
+#               catching a "quitting"-type signal.
+#               to the 
 # TODO(dustin): We need to add a new menuitem to "close all windows".
+# TODO(dustin): Let the following environment variables have meaning (can we
+#               add application parameters?):
+#
+#   PERSIST_DONT_RECALL (bool)
+#   PERSIST_DONT_SAVE (bool)
+#   PERSIST_CLEAR (bool)
+#   PERSIST_DISABLE (bool)
 
-#if environ.get('DEBUG', '').lower() == 'true':
-#    _log.setLevel(logging.DEBUG)
+# TODO(dustin): Debug why certain exceptions cause a window bomb.
+
+if environ.get('DEBUG', '').lower() == 'true':
+    _log.setLevel(logging.DEBUG)
 _log.setLevel(logging.DEBUG)
 
 # For some reason our logging won't emit correctly unless an initial message is
@@ -51,9 +65,9 @@ class PersistPluginApp(GObject.Object, Gedit.AppActivatable):
 # TODO(dustin): What happens when a setting isn't defined? Catch and set to
 #               another value.
 
-        #self.__capture_interval_s = _gedit_settings.get_uint(
-        #                                'auto-save-interval') * 60
-        self.__capture_interval_s = 10
+        self.__capture_interval_s = _gedit_settings.get_uint(
+                                        'auto-save-interval') * 60
+        #self.__capture_interval_s = 10
 
         self.__timer_capture = None
         self.__timer_recall = None
