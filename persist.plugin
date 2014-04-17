@@ -7,4 +7,5 @@ Description=Maintain a persistent session.
 Authors=Dustin Oprea <dustin@randomingenuity.com>
 Copyright=Copyright © 2014 Dustin Oprea <dustin@randomingenuity.com>
 Website=github.com/dsoprea/GeditPersist
+;Icon=gnome-mime-text-x-python
 
